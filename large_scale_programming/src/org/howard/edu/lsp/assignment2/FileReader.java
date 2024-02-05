@@ -47,11 +47,21 @@ public class FileReader {
 
         // Collect tokens into the list
         while (tokenizer.hasMoreTokens()) {
-            tokens.add(tokenizer.nextToken());
+            tokens.add(tokenizer.nextToken().toLowerCase());
         }
 
         return tokens;
     }
+    
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 
 
 }
