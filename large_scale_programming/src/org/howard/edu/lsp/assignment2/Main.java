@@ -13,9 +13,12 @@ public class Main {
         String relativePath = "words.txt";
 
         try {
+        	//Print out the input file
             String fileContent = FileReader.readFileAsString(relativePath);
+            System.out.println("The input file is as follows: ");
+            System.out.println(fileContent);
             List<String> tokenList = FileReader.tokenizeString(fileContent);
-            System.out.println("Tokens:");
+            System.out.println("Here is the word count for the input file");
             for (String token : tokenList) {
             	if (FileReader.isNumeric(token) || token.length()<=3 ) {
             		continue;
