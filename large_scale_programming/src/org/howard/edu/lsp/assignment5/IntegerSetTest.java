@@ -85,6 +85,12 @@ public class IntegerSetTest {
         set.add(1);
         
         assertTrue(set.contains(1));
+        
+        //Accounting for duplicates
+        set.add(1);
+        set.add(2);
+        assertTrue((2 == set.length()) && set.contains(1) && set.contains(2));
+        
     }
 
     @Test
