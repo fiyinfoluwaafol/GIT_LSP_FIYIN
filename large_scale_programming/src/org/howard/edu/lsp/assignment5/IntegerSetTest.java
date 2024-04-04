@@ -123,13 +123,27 @@ public class IntegerSetTest {
     @Test
     @DisplayName("Test case for diff")
     public void testDiff() {
-        // Implement a similar pattern as above for the diff method
+    	IntegerSet set2 = new IntegerSet();
+    	set.add(1);
+    	set.add(2);
+    	set2.add(2);
+    	set2.add(3);
+    	set.diff(set2);
+    	
+    	assertTrue(set.contains(1) && !set.contains(2) && !set.contains(3));
     }
 
     @Test
     @DisplayName("Test case for complement")
     public void testComplement() {
-        // Implement a similar pattern as above for the complement method
+    	IntegerSet set2 = new IntegerSet();
+    	set.add(1);
+    	set.add(2);
+    	set2.add(2);
+    	set2.add(3);
+    	set.complement(set2);
+    	
+    	assertTrue(set.contains(3) && !set.contains(2) && !set.contains(1));
     }
 
     @Test
