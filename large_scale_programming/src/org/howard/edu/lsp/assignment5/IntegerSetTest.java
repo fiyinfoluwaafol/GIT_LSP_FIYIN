@@ -1,4 +1,4 @@
-package org.howard.edu.assignment5;
+package org.howard.edu.lsp.assignment5;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

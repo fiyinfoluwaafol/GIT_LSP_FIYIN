@@ -1,5 +1,5 @@
 //Name: Fiyinfoluwa Afolayan
-package org.howard.edu.assignment5;
+package org.howard.edu.lsp.assignment5;
 
 import java.util.ArrayList;
 import java.util.List;
