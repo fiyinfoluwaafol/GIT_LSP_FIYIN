@@ -139,8 +139,8 @@ public class IntegerSet {
      * @param intSetb An IntegerSet Type
      */
     public void complement(IntegerSet intSetb) {
-    	ArrayList<Integer> complementSet = new ArrayList<>(this.set);
-        complementSet.removeAll(intSetb.set);
+    	ArrayList<Integer> complementSet = new ArrayList<>(intSetb.set);
+        complementSet.removeAll(this.set);
         this.set = complementSet;
     }
 
