@@ -16,20 +16,19 @@ public class IntegerSetTest {
     @Test
     @DisplayName("Test case for clear")
     public void testClear() {
-        // Setup the test scenario
         set.add(1);
         set.add(2);
         
-        // Invoke the method to test
         set.clear();
         
-        // Check the result
         assertTrue(set.isEmpty());
     }
 
     @Test
     @DisplayName("Test case for length")
     public void testLength() {
+    	assertEquals(0, set.length());
+    	
         set.add(1);
         set.add(2);
         
@@ -40,15 +39,24 @@ public class IntegerSetTest {
     @DisplayName("Test case for equals")
     public void testEquals() {
         IntegerSet set2 = new IntegerSet();
+        
+        assertTrue(set.equals(set2));
+        
         set.add(1);
         set2.add(1);
         
         assertTrue(set.equals(set2));
+        
+        set2.add(2);
+        
+        assertFalse(set.equals(set2));
     }
 
     @Test
     @DisplayName("Test case for contains")
     public void testContains() {
+    	
+    	assertFalse(set.contains(1));
         set.add(1);
         
         assertTrue(set.contains(1));
@@ -59,6 +67,8 @@ public class IntegerSetTest {
     @DisplayName("Test case for largest")
     public void testLargest() throws IntegerSetException {
         set.add(1);
+        assertEquals(1, set.largest());
+        
         set.add(3);
         assertEquals(3, set.largest());
         
@@ -71,6 +81,8 @@ public class IntegerSetTest {
     @DisplayName("Test case for smallest")
     public void testSmallest() throws IntegerSetException {
         set.add(1);
+        assertEquals(1, set.smallest());
+        
         set.add(3);
         assertEquals(1, set.smallest());
         
@@ -100,6 +112,9 @@ public class IntegerSetTest {
         set.remove(1);
         
         assertFalse(set.contains(1));
+        
+        set.remove(2);
+        assertTrue(set.isEmpty());
     }
 
     @Test

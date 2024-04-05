@@ -114,7 +114,7 @@ public class IntegerSet {
      */ 
     public int largest() throws IntegerSetException {
         if (isEmpty()) {
-            throw new IntegerSetException(null);
+            throw new IntegerSetException("Set is empty, so largest cannot be determined");
         }
         return set.stream().max(Integer::compareTo).get();
     }
@@ -128,7 +128,7 @@ public class IntegerSet {
      */
     public int smallest() throws IntegerSetException {
         if (isEmpty()) {
-            throw new IntegerSetException(null);
+            throw new IntegerSetException("Set is empty, so smallest cannot be determined");
         }
         return set.stream().min(Integer::compareTo).get();
     }
