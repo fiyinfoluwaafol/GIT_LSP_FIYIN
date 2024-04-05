@@ -12,7 +12,7 @@ public class IntegerSetTest {
     public void setUp() {
         set = new IntegerSet();
     }
-
+    
     @Test
     @DisplayName("Test case for clear")
     public void testClear() {
@@ -40,7 +40,7 @@ public class IntegerSetTest {
     public void testEquals() {
         IntegerSet set2 = new IntegerSet();
         
-        assertTrue(set.equals(set2));
+        assertTrue(set.equals(set2)); // CHecks two empty sets
         
         set.add(1);
         set2.add(1);
@@ -69,6 +69,7 @@ public class IntegerSetTest {
         set.add(1);
         assertEquals(1, set.largest());
         
+        set.add(2);
         set.add(3);
         assertEquals(3, set.largest());
         
@@ -83,6 +84,7 @@ public class IntegerSetTest {
         set.add(1);
         assertEquals(1, set.smallest());
         
+        set.add(2);
         set.add(3);
         assertEquals(1, set.smallest());
         
@@ -126,6 +128,17 @@ public class IntegerSetTest {
         set.union(set2);
         
         assertTrue(set.contains(1) && set.contains(2));
+        
+        setUp();
+        set2.add(3);
+        set.union(set2);
+        
+        assertTrue(set.contains(2) && set.contains(3));
+        
+        setUp();
+        set2.clear();
+        set.union(set2);
+        assertTrue(set.isEmpty());
     }
 
     @Test
@@ -134,11 +147,21 @@ public class IntegerSetTest {
         IntegerSet set2 = new IntegerSet();
         set.add(1);
         set.add(2);
+        set.intersect(set2);
+        assertTrue(set.isEmpty());
+        
+        set.add(1);
+        set.add(2);
         set2.add(2);
         set2.add(3);
         set.intersect(set2);
         
         assertTrue(set.contains(2) && !set.contains(1) && !set.contains(3));
+        
+        setUp();
+        set2.clear();
+        set.intersect(set2);
+        assertTrue(set.isEmpty());
     }
 
     @Test
@@ -183,5 +206,8 @@ public class IntegerSetTest {
         
         String expected = "[1, 2]"; // Assuming your toString method formats it this way
         assertEquals(expected, set.toString());
+        
+        setUp();
+        assertEquals("[]", set.toString());
     }
 }
