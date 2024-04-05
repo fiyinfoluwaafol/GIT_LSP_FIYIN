@@ -10,7 +10,7 @@ public class IntegerSetTest {
 
     @BeforeEach
     public void setUp() {
-        set = new IntegerSet();
+        set = new IntegerSet(); // Before each unit test, it initializes an empty set
     }
     
     @Test
@@ -21,17 +21,20 @@ public class IntegerSetTest {
         
         set.clear();
         
+        // Checks to see whether clear() clears the set and provides an empty set
         assertTrue(set.isEmpty());
     }
 
     @Test
     @DisplayName("Test case for length")
     public void testLength() {
+    	// Checks for when the set is empty
     	assertEquals(0, set.length());
     	
         set.add(1);
         set.add(2);
         
+        // Checks for when the set has elements
         assertEquals(2, set.length());
     }
 
@@ -40,15 +43,26 @@ public class IntegerSetTest {
     public void testEquals() {
         IntegerSet set2 = new IntegerSet();
         
-        assertTrue(set.equals(set2)); // CHecks two empty sets
+        // Checks for two empty sets
+        assertTrue(set.equals(set2));
         
         set.add(1);
         set2.add(1);
         
+        // Checks for two equal sets [1] == [1]
         assertTrue(set.equals(set2));
         
+        setUp();
+        set.add(2);
+        
+        // Checks for two sets of the same size but different elements
+        assertFalse(set.equals(set2));
+        
+        setUp();
+        set.add(1);
         set2.add(2);
         
+        // Checks for two sets that aren't equal (in terms of length and elements) -> [1] != [1, 2]
         assertFalse(set.equals(set2));
     }
 
@@ -56,10 +70,14 @@ public class IntegerSetTest {
     @DisplayName("Test case for contains")
     public void testContains() {
     	
+    	// Checks for an empty set
     	assertFalse(set.contains(1));
         set.add(1);
         
+        // Checks for when element exists in set
         assertTrue(set.contains(1));
+        
+        // Checks for when element doesn't exist in set
         assertFalse(set.contains(2));
     }
 
@@ -67,14 +85,18 @@ public class IntegerSetTest {
     @DisplayName("Test case for largest")
     public void testLargest() throws IntegerSetException {
         set.add(1);
+        // Checks for largest on a singleton
         assertEquals(1, set.largest());
         
         set.add(2);
         set.add(3);
+        
+        //Checks for largest in a set with multiple elements
         assertEquals(3, set.largest());
         
         setUp();
         Throwable exception = assertThrows(IntegerSetException.class, () -> new IntegerSet().largest());
+        // Checks if exception is correctly thrown for when set is empty
         assertEquals("Set is empty, so largest cannot be determined",exception.getMessage());
     }
 
@@ -82,14 +104,18 @@ public class IntegerSetTest {
     @DisplayName("Test case for smallest")
     public void testSmallest() throws IntegerSetException {
         set.add(1);
+        // Checks for smallest on a singleton
         assertEquals(1, set.smallest());
         
         set.add(2);
         set.add(3);
+        
+        //Checks for smallest in a set with multiple elements
         assertEquals(1, set.smallest());
         
         setUp();
         Throwable exception = assertThrows(IntegerSetException.class, () -> new IntegerSet().smallest());
+        // Checks if exception is correctly thrown for when set is empty
         assertEquals("Set is empty, so smallest cannot be determined",exception.getMessage());
     }
 
@@ -97,12 +123,12 @@ public class IntegerSetTest {
     @DisplayName("Test case for add")
     public void testAdd() {
         set.add(1);
-        
+        // Checks that item is added to set
         assertTrue(set.contains(1));
         
-        //Accounting for duplicates
         set.add(1);
         set.add(2);
+        //Accounting for duplicates, checks that 1 cannot be added again, but 2 can be added
         assertTrue((2 == set.length()) && set.contains(1) && set.contains(2));
         
     }
@@ -112,10 +138,11 @@ public class IntegerSetTest {
     public void testRemove() {
         set.add(1);
         set.remove(1);
-        
+        // Checks if removed item still exists in set
         assertFalse(set.contains(1));
         
         set.remove(2);
+        // Checks for when a non-existent item is tried to be removed
         assertTrue(set.isEmpty());
     }
 
@@ -127,17 +154,30 @@ public class IntegerSetTest {
         set2.add(2);
         set.union(set2);
         
+        // Checks for 2 sets with different elements
         assertTrue(set.contains(1) && set.contains(2));
         
         setUp();
         set2.add(3);
         set.union(set2);
         
+        // Checks for the case of an empty set and a set with elements
         assertTrue(set.contains(2) && set.contains(3));
         
         setUp();
         set2.clear();
+        set.add(1);
+        set.add(2);
+        set2.add(2);
+        set2.add(3);
         set.union(set2);
+        // Checks for 2 sets with a similar element, to ensure no duplicates
+        assertTrue(set.contains(1) && set.contains(2) && set.contains(3));
+        
+        setUp();
+        set2.clear();
+        set.union(set2);
+        // Checks for the case of 2 empty sets
         assertTrue(set.isEmpty());
     }
 
@@ -148,6 +188,7 @@ public class IntegerSetTest {
         set.add(1);
         set.add(2);
         set.intersect(set2);
+        // Checks for the case of 2 sets with nothing in common
         assertTrue(set.isEmpty());
         
         set.add(1);
@@ -156,11 +197,14 @@ public class IntegerSetTest {
         set2.add(3);
         set.intersect(set2);
         
+        // Checks for the case of 2 sets with elements in common
         assertTrue(set.contains(2) && !set.contains(1) && !set.contains(3));
         
         setUp();
         set2.clear();
         set.intersect(set2);
+        
+        // Checks for the case of 2 empty sets
         assertTrue(set.isEmpty());
     }
 
@@ -173,7 +217,7 @@ public class IntegerSetTest {
     	set2.add(2);
     	set2.add(3);
     	set.diff(set2);
-    	
+    	// Checks for the case of 2 sets with at least one common element
     	assertTrue(set.contains(1) && !set.contains(2) && !set.contains(3));
     }
 
@@ -187,14 +231,38 @@ public class IntegerSetTest {
     	set2.add(3);
     	set.complement(set2);
     	
+    	// Checks for the case of 2 sets with at least one common element
     	assertTrue(set.contains(3) && !set.contains(2) && !set.contains(1));
+    	
+    	setUp();
+    	set.add(1);
+    	set.add(2);
+    	set2.clear();
+    	set2.add(2);
+    	set.complement(set2);
+    	
+    	// Checks for the case where complement is an empty set
+    	assertTrue(set.isEmpty());
+    	
+    	set.add(1);
+    	set.add(2);
+    	set2.clear();
+    	set.complement(set2);
+    	
+    	// Checks for the case of 2 sets, where one is an empty set
+    	assertTrue(set.isEmpty());
+    	
     }
 
     @Test
     @DisplayName("Test case for isEmpty")
     public void testIsEmpty() {
+    	
+    	// Checks for the case of an empty set
         assertTrue(set.isEmpty());
         set.add(1);
+        
+        // Checks for the case of a non-empty set
         assertFalse(set.isEmpty());
     }
 
@@ -204,10 +272,12 @@ public class IntegerSetTest {
         set.add(1);
         set.add(2);
         
-        String expected = "[1, 2]"; // Assuming your toString method formats it this way
+        String expected = "[1, 2]";
+        // Checks for the case of a non-empty set
         assertEquals(expected, set.toString());
         
         setUp();
+        // Checks for the case of an empty set
         assertEquals("[]", set.toString());
     }
 }
